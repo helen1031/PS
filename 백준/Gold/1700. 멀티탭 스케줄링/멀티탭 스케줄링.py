@@ -22,11 +22,6 @@ while devices:
     nextd = devices.popleft()
     hit = 0
     score = []
-
-    if len(use) < n:
-        use.append(nextd)
-        continue
-
     for u in use:
         idx = ''.join(devices).find(str(u))
         if idx == -1:
