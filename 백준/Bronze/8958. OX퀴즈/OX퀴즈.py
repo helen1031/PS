@@ -1,12 +1,14 @@
+import sys
+input = sys.stdin.readline
+
 for _ in range(int(input())):
+    res = input().rstrip()
     tot = 0
-    s = input()
-    
-    cnt = 0
-    for c in s:
-        if c == 'O':
-            cnt += 1
+    tmp = 0
+    for i in range(len(res)):
+        if res[i] == "O":
+            tmp += 1
+            tot += tmp
         else:
-            cnt = 0
-        tot += cnt
+            tmp = 0
     print(tot)
