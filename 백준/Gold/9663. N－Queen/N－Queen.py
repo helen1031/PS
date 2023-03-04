@@ -1,21 +1,23 @@
 n = int(input())
-info = [0] * n
-located = [False] * n
-diag1 = [False] * (2 * n-1)
-diag2 = [False] * (2 * n-1)
+
+col = [0] * n
+rowCheck = [False] * n
+diag1Check = [False] * (2 * n - 1)
+diag2Check = [False] * (2 * n - 1)
 ans = 0
 
-def set(i):
-    global ans
-    for j in range(n):
-        if not located[j] and not diag1[i+j] and not diag2[i-j+ n -1]:
-            info[i] = j
-            if i == n - 1:
-                ans += 1
-            else:
-                located[j] = diag1[i+j] = diag2[i-j+ n -1] = True
-                set(i+1)
-                located[j] = diag1[i+j] = diag2[i-j+ n -1] = False
-    
+def set(x):
+	global ans
+
+	for y in range(n):
+		if not rowCheck[y] and not diag1Check[x + y] and not diag2Check[x - y + n - 1]:
+			col[x] = y
+			if x == n - 1:
+				ans += 1
+			else:
+				rowCheck[y] = diag1Check[x+y] = diag2Check[x-y+n-1] = True
+				set(x+1)
+				rowCheck[y] = diag1Check[x+y] = diag2Check[x-y+n-1] = False
+                
 set(0)
 print(ans)
