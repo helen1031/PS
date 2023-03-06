@@ -1,23 +1,22 @@
 n = int(input())
-
-col = [0] * n
-rowCheck = [False] * n
-diag1Check = [False] * (2 * n - 1)
-diag2Check = [False] * (2 * n - 1)
+ypos = [0] * n
+xpos = [False] * n
+diag1 = [False] * (2 * n -1)
+diag2 = [False] * (2 * n -1)
 ans = 0
 
-def set(x):
-	global ans
-
-	for y in range(n):
-		if not rowCheck[y] and not diag1Check[x + y] and not diag2Check[x - y + n - 1]:
-			col[x] = y
-			if x == n - 1:
-				ans += 1
-			else:
-				rowCheck[y] = diag1Check[x+y] = diag2Check[x-y+n-1] = True
-				set(x+1)
-				rowCheck[y] = diag1Check[x+y] = diag2Check[x-y+n-1] = False
-                
-set(0)
+def dfs(y):
+    global ans
+    
+    for x in range(n):
+        if not xpos[x] and not diag1[y + x] and not diag2[n - y + x - 1]:
+            ypos[y] = x 
+            if y == n-1:
+                ans+= 1
+            else:
+                xpos[x] = diag1[y+x] = diag2[n-y+x-1] = True
+                dfs(y+1)
+                xpos[x] = diag1[y+x] = diag2[n-y+x-1] = False
+    
+dfs(0)
 print(ans)
