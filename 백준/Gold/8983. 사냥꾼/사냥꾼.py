@@ -21,8 +21,10 @@ for a, b in anipos:
             cnt += 1
             break
         else:
+            # minpos 가 mid 보다 크면
             if shootpos[mid] < maxpos:
                 left = mid + 1
+            # maxpos 가 mid보다 작으면
             else:
                 right = mid - 1
         
