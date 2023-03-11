@@ -3,16 +3,15 @@ input = sys.stdin.readline
 
 n = int(input())
 towers = list(map(int, input().split()))
-stack = []
-answer = [0 for i in range(n)]
-
+answer = [0] * n
+st = []
 for i in range(n):
-    while stack:
-        if stack[-1][1] > towers[i]:
-            answer[i] = stack[-1][0] + 1
+    while st:
+        if st[-1][1] > towers[i]:
+            answer[i] = st[-1][0] + 1
             break
         else:
-            stack.pop()
-    stack.append([i, towers[i]])
-
+            st.pop()
+        
+    st.append((i, towers[i]))
 print(*answer)
