@@ -25,18 +25,14 @@ def dfs(current, visited):
     if inside[current]:
         cnt += 1
         return
-    
+    visited[nextpath] = True
     for nextpath in graph[current]:
         if not visited[nextpath]:
-            visited[nextpath] = True
             dfs(nextpath, visited)
-            visited[nextpath] = False
 
 
 for start in range(1, n + 1):
     if inside[start]:
-        visited[start] = True
         dfs(start, visited)
-        visited[start] = False
         
 print(cnt)
