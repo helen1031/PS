@@ -1,29 +1,29 @@
+import sys
+input = sys.stdin.readline
+
 from collections import deque
 
-def BFS(current, time, dst, visited):
-    queue = deque([(current, time)])
-
-    while queue:
-        x = queue.popleft()
-        #print(x)
-        xx = x[0]
-        xt = x[1]
-
-        if not visited[xx]:
-            visited[xx] = True
-
-            if(xx == dst):
-                return xt
-
-            else:
-                if(xx+1) <= 100000:
-                    queue.append((xx+1, xt+1))
-                if(xx-1) >= 0:
-                    queue.append((xx-1, xt+1))
-                if(xx*2) <= 100000:
-                    queue.append((2*x[0], xt+1))
-    return xt
-
-N, K = map(int, input().split())
+n, k = map(int, input().split())
 visited = [False] * 1000001
-print(BFS(N, 0, K, visited))
+
+def bfs(start, stime):
+    q = deque([(start, stime)])
+    while q:
+        now, time = q.popleft()
+
+        if not visited[now]:
+            visited[now] = True
+            
+            if now == k:
+                return time
+
+            if 0 <= now + 1 <= 100000:
+                q.append((now + 1, time + 1))
+            if 0 <= now - 1 <= 100000:
+                q.append((now - 1, time + 1))
+            if 0 <= now * 2 <= 100000:
+                q.append((now * 2, time + 1))
+
+    return time
+
+print(bfs(n, 0))
