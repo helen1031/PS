@@ -4,26 +4,21 @@ input = sys.stdin.readline
 from collections import deque
 
 n, k = map(int, input().split())
-visited = [False] * 1000001
+visited = [-1] * 1000001
+def bfs(start):
+    q = deque([start])
+    visited[start] = 0
 
-def bfs(start, stime):
-    q = deque([(start, stime)])
     while q:
-        now, time = q.popleft()
+        now = q.popleft()
 
-        if not visited[now]:
-            visited[now] = True
-            
-            if now == k:
-                return time
+        if now == k:
+            return
 
-            if 0 <= now + 1 <= 100000:
-                q.append((now + 1, time + 1))
-            if 0 <= now - 1 <= 100000:
-                q.append((now - 1, time + 1))
-            if 0 <= now * 2 <= 100000:
-                q.append((now * 2, time + 1))
+        for nxt in (now + 1, now - 1, now * 2):
+            if 0 <= nxt <= 100000 and visited[nxt] == -1:
+                q.append(nxt)
+                visited[nxt] = visited[now] + 1
 
-    return time
-
-print(bfs(n, 0))
+bfs(n)
+print(visited[k])
