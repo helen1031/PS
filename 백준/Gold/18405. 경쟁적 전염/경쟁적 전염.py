@@ -1,38 +1,39 @@
+import sys
+input = sys.stdin.readline
+
 from collections import deque
 
-global g, s
+n, k = map(int, input().split())
+tube = [list(map(int, input().split())) for _ in range(n)]
 
-def bfs(v):
-    # 상하좌우
-    dx = [-1, 1, 0, 0]
-    dy = [0, 0, -1, 1]
-    q = deque(v)
+viruses = []
+for y in range(n):
+    for x in range(n):
+        if tube[y][x] != 0:
+            viruses.append((tube[y][x], y, x, 0))
+viruses.sort()
+
+s, i, j = map(int, input().split()) # i 행, j 열
+
+dy = [-1, 1, 0, 0]
+dx = [0, 0, -1, 1]
+
+def bfs():
+    q = deque(viruses)
 
     while q:
-        vno, vx, vy, vs = q.popleft()
+        vnum, vy, vx, time = q.popleft()
 
-        if s == vs:
-            break
+        if time == s:
+            return
 
         for i in range(4):
-            nx = vx + dx[i]
             ny = vy + dy[i]
-            if 0 <= nx and nx < n and 0 <= ny and ny < n:
-                if g[nx][ny] == 0:
-                    g[nx][ny] = vno
-                    q.append((vno, nx, ny, vs+1))
+            nx = vx + dx[i]
+            if 0 <= ny < n and 0 <= nx < n:
+                if tube[ny][nx] == 0:
+                    tube[ny][nx] = vnum
+                    q.append((vnum, ny, nx, time + 1))
 
-n, k = map(int, input().split())
-g= []
-v = []
-for i in range(n):
-    g.append(list(map(int, input().split())))
-    for j in range(n):
-        if g[i][j] != 0 : # 바이러스 존재
-            v.append((g[i][j], i, j, 0))
-
-v.sort()    #바이러스 번호 오름차순
-s, x, y = map(int, input().split())
-
-bfs(v)
-print(g[x-1][y-1])
+bfs()
+print(tube[i-1][j-1])
