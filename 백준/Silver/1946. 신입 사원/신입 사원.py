@@ -1,13 +1,18 @@
 import sys
+input = sys.stdin.readline
+
 for _ in range(int(input())):
     n = int(input())
-    applicants = [list(map(int, input().split())) for _ in range(n)]
-    applicants.sort()
-    target = applicants[0][1]
+    ranks = [list(map(int, input().split())) for _ in range(n)]
+    ranks.sort()
+    
+    sa, sb = ranks[0]
     cnt = 1
-    for applicant in applicants[1:]:
-        if applicant[1] <= target:
+    
+    for rank in ranks[1:]:
+        a, b = rank
+        if sb >= b:
             cnt += 1
-            target = applicant[1]
-    print(cnt)
+            sa, sb = a, b
             
+    print(cnt)
