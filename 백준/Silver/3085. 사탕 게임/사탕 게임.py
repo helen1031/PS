@@ -1,48 +1,51 @@
-from collections import deque
 import sys
-
 input = sys.stdin.readline
 
 n = int(input())
-board = [list(input().strip()) for _ in range(n)]
+board = [list(map(str, input().rstrip())) for _ in range(n)]
 
-
-def count():
-    maxx = 0
-    for i in range(n):
-        xcnt = 1
-        for j in range(n-1):
-            if board[i][j] == board[i][j+1]:
-                xcnt += 1
+# 행 고정, x좌표 탐색
+def colCnt():
+    mcnt = 0
+    for y in range(n):
+        tmp = 1
+        for x in range(n - 1):
+            if board[y][x] == board[y][x+1]:
+                tmp += 1
             else:
-                xcnt = 1
-            maxx = max(maxx, xcnt)
+                tmp = 1
+            mcnt = max(mcnt, tmp)
 
-    maxy = 0
-    for i in range(n):
-        ycnt = 1
-        for j in range(n-1):
-            if board[j][i] == board[j+1][i]:
-                ycnt += 1
+    return mcnt
+
+# 열 고정, y좌표 탐색
+def rowCnt():
+    mcnt = 0
+    for x in range(n):
+        tmp = 1
+        for y in range(n - 1):
+            if board[y][x] == board[y+1][x]:
+                tmp += 1
             else:
-                ycnt = 1
-            maxy = max(maxy, ycnt)
+                tmp = 1
+            mcnt = max(mcnt, tmp)
 
-    return max(maxx, maxy)
+    return mcnt
 
-dy = [-1, 1, 0, 0]
-dx = [0, 0, -1, 1]
+dy = [0, 0, -1, 1]
+dx = [-1, 1, 0, 0]
 
-cnt = 0
+maxcnt = 0
 for y in range(n):
     for x in range(n):
         for i in range(4):
             ny = y + dy[i]
             nx = x + dx[i]
             if 0 <= ny < n and 0 <= nx < n:
+                # 인접 사탕이 서로 다르면
                 if board[y][x] != board[ny][nx]:
                     board[y][x], board[ny][nx] = board[ny][nx], board[y][x]
-                    cnt = max(cnt, count())
+                    maxcnt = max(maxcnt, rowCnt(), colCnt())
                     board[y][x], board[ny][nx] = board[ny][nx], board[y][x]
 
-print(cnt)
+print(maxcnt)
