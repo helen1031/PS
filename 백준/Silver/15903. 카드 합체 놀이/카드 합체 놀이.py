@@ -4,14 +4,13 @@ input = sys.stdin.readline
 import heapq
 
 n, m = map(int, input().split())
-cards = []
-for card in map(int, input().split()):
-    heapq.heappush(cards, card)
+cards = list(map(int, input().split()))
+heapq.heapify(cards)
 
 for _ in range(m):
-    x = heapq.heappop(cards)
-    y = heapq.heappop(cards)
-    heapq.heappush(cards, x+y)
-    heapq.heappush(cards, x+y)
-    
+    a = heapq.heappop(cards)
+    b = heapq.heappop(cards)
+    heapq.heappush(cards, a+b)
+    heapq.heappush(cards, a+b)
+
 print(sum(cards))
