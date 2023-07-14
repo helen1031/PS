@@ -1,10 +1,11 @@
 import sys
+input = sys.stdin.readline
 
-n, m = map(int, input().strip().split())
-alist = list(map(int, input().strip().split()))
-blist = list(map(int, input().strip().split()))
+n, m = map(int, input().split())
+alist = list(map(int, input().split()))
+blist = list(map(int, input().split()))
 
-clist = alist + blist
+clist = alist + blist;
 clist.sort()
 
 print(*clist)
